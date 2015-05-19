@@ -21,17 +21,14 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Arrays;
 
 
 
-public class MainActivity extends Activity implements Serializable{
+
+public class MainActivity extends Activity {
     CallbackManager callbackmanager;
-    LoginButton loginbutton;;
+    LoginButton loginbutton;
     GraphRequestAsyncTask request;
     String id;
     String nomcomplet;
@@ -41,15 +38,7 @@ public class MainActivity extends Activity implements Serializable{
     String mail;
     String pays;
     String timezone;
-
-
-
-
-
-
-
-
-
+    String datenaissance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -67,7 +56,7 @@ public class MainActivity extends Activity implements Serializable{
         loginbutton.registerCallback(callbackmanager, new FacebookCallback<LoginResult>() {
 
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
                 request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
@@ -127,20 +116,20 @@ public class MainActivity extends Activity implements Serializable{
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        try {
+                            datenaissance = object.getString("birthday");
+                            Log.v("Date de naissance",datenaissance );
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 }).executeAsync();
-
+                User user = new User(id,nomcomplet,nom,prenom,sexe,mail,pays,timezone,datenaissance);
+                user.getUser();
+                User.saveUser(user, getApplicationContext());
+                User.getUser(getApplicationContext());
             }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -161,23 +150,6 @@ public class MainActivity extends Activity implements Serializable{
 
 
     }
-    User user1 = new User(id, nomcomplet, nom, prenom, sexe, mail, pays, timezone);
-    public void saveUser(User user1){
-        this.user1 = user1;
-        try {
-            FileOutputStream fos = new FileOutputStream("myfile");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(user1);
-            oos.close();
-            fos.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-            Log.v("Serialization",ioe.toString());
-        }}
-
-
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -185,6 +157,9 @@ public class MainActivity extends Activity implements Serializable{
         callbackmanager.onActivityResult(requestCode, resultCode, data);
 
     }
+
+
+
 
 
 
