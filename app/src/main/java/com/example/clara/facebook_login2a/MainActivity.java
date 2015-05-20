@@ -123,12 +123,17 @@ public class MainActivity extends Activity {
                             e.printStackTrace();
                         }
 
+                        User user = new User(id,nomcomplet,nom,prenom,sexe,mail,pays,timezone);
+                        user.getUser();
+                        User.saveUser(user, getApplicationContext());
+                        User.getUser(getApplicationContext());
+
                     }
+
+
                 }).executeAsync();
-                User user = new User(id,nomcomplet,nom,prenom,sexe,mail,pays,timezone,datenaissance);
-                user.getUser();
-                User.saveUser(user, getApplicationContext());
-                User.getUser(getApplicationContext());
+
+
             }
 
 

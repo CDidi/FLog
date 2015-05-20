@@ -25,10 +25,10 @@ public class User implements Serializable {
     private String mail;
     private String pays;
     private String timezone;
-    private String datenaissance;
 
 
-    public User(String id, String nomcomplet, String nom, String prenom, String sexe, String mail, String pays, String timezone, String datenaissance) {
+
+    public User(String id, String nomcomplet, String nom, String prenom, String sexe, String mail, String pays, String timezone) {
 
         this.id = id;
         this.nomcomplet = nomcomplet;
@@ -38,7 +38,7 @@ public class User implements Serializable {
         this.mail = mail;
         this.pays = pays;
         this.timezone = timezone;
-        this.datenaissance = datenaissance;
+
 
     }
 
@@ -51,8 +51,6 @@ public class User implements Serializable {
         Log.e("mail", mail);
         Log.e("pays", pays);
         Log.e("timezone", timezone);
-        Log.e("date de naissance", datenaissance);
-
 
     }
 
