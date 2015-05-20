@@ -124,9 +124,10 @@ public class MainActivity extends Activity {
                         }
 
                         User user = new User(id,nomcomplet,nom,prenom,sexe,mail,pays,timezone);
-                        user.getUser();
+
                         User.saveUser(user, getApplicationContext());
-                        User.getUser(getApplicationContext());
+                        User user2 = User.getUser(getApplicationContext());
+                        user2.getUser();
 
                     }
 
